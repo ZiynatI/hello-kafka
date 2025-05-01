@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: hello-kafka
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 16384
+      compression-type: snappy
+      properties:
+        linger.ms: 10
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      properties:
+        max.poll.records: 100
+
+server:
+  port: 8080
+
+kafka:
+  groupId: hello-kafka-group
+  clientId: hello-kafka-client-
+  acksConfig: all
+  clientDnsLookup: use_all_dns_ips
+  bootstrapServers: localhost:9092,localhost:9093
+  autoOffsetResetConfig: earliest
+
+  retriesConfig: 3
+  lingerMsConfig: 10
+  batchSizeConfig: 16384
+  bufferMemoryConfig: 33554432
+  compressionType: snappy
+
+  topics:
+    mainTopic: main-topic
+    dlqTopic: main-topic-dlq
